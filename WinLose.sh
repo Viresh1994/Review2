@@ -1,10 +1,31 @@
-declare -A test_dict
-test_dict[win]=$((RANDOM%100))
-test_dict[loss]= $((RANDOM%100))
+#! /bin/bash -x
+declare -A result
+result['win']=0
+result['loss']=0
+isHead=1
+toss=0
+noOfPlays=0
+i=1
+percentageOfWins=0
 
-echo ${test_dict[win]}
-echo ${test_dict[loss]}
+echo "Enter how many time do you want to play"
+read noOfPlays
 
-n=$(((test_dict[win]*100)/test_dict[loss]))
+while [ $i -le $noOfPlays ]
+do
+	toss=$((RANDOM%2))
+	if [[ $toss -eq $ishead ]]
+	then
+		result['win']=$((${result['win']}+1))
+	else
+		result['loss']=$((${result['loss']}+1))
+	fi
+	((i++))
+done
 
-echo $n
+echo "win=${result['win']}"
+echo "loss=${result['loss']}"
+
+percentageOfWins=`echo ${result['win']} $noOfPlays | awk '{print ($1/$2*100)}'`
+
+echo "percentage of wins= $percentageOfWins"
